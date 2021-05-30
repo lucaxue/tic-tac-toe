@@ -13,5 +13,8 @@ export const Square: React.FC<Props> = ({ state, turn, select }) => {
 };
 
 const Button = styled.button`
+  text-align: center;
   padding: 0;
+  font-family: sans-serif;
+  font-size: 4rem;
 `;

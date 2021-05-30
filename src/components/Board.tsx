@@ -26,7 +26,7 @@ export const Board: React.FC<Props> = ({ turn, squares, selectAt }) => {
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 10rem;
-  height: 10rem;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  width: 500px;
+  height: 500px;
 `;
