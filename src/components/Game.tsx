@@ -14,6 +14,7 @@ export const Game: React.FC = () => {
       <Board
         turn={isXTurn ? 'X' : 'O'}
         squares={board}
+        winningSquares={calculateWinner(board)}
         selectAt={(idx) => {
           if (calculateWinner(board) || board[idx]) {
             return;
@@ -22,6 +23,9 @@ export const Game: React.FC = () => {
           nextPlayer();
         }}
       />
+      {calculateWinner(board) && (
+        <Button onClick={() => dispatch({ type: 'RESET' })}>Restart</Button>
+      )}
     </Wrapper>
   );
 };
@@ -30,4 +34,11 @@ const Wrapper = styled.div`
   display: grid;
   min-height: 100vh;
   place-items: center;
+  background: #f1f1f1;
+`;
+
+const Button = styled.button`
+  font-family: monospace;
+  font-size: 1.5rem;
+  padding: 1rem;
 `;
