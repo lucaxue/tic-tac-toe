@@ -12,10 +12,6 @@ export function calculateResult(board: Board): BoardState {
     [2, 4, 6],
   ];
 
-  if (board.every((square) => square !== null)) {
-    return Array(9).fill('draw');
-  }
-
   for (const combo of winningCombos) {
     const [a, b, c] = combo;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -24,5 +20,10 @@ export function calculateResult(board: Board): BoardState {
         .map((_, idx) => (combo.includes(idx) ? 'win' : null));
     }
   }
+
+  if (board.every((square) => square !== null)) {
+    return Array(9).fill('draw');
+  }
+
   return Array(9).fill(null);
 }
