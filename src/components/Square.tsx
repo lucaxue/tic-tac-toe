@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import { Square as SquareType } from 'src/types';
-import styled, { css } from 'styled-components';
+import { Square as SquareType, SquareState } from 'src/types';
+import styled from 'styled-components';
 
 interface Props {
-  state: SquareType;
+  choice: SquareType;
   turn: 'X' | 'O';
   select: () => void;
-  winning: boolean;
+  state: SquareState;
 }
 
-export const Square: React.FC<Props> = ({ state, turn, select, winning }) => {
+export const Square: React.FC<Props> = ({ choice, turn, select, state }) => {
   const [showTurn, setShowTurn] = useState(false);
   return (
     <Button
       onClick={select}
       onMouseEnter={() => setShowTurn(true)}
       onMouseLeave={() => setShowTurn(false)}
-      winning={winning}
+      state={state}
     >
-      {showTurn && !state ? turn : state}
+      {showTurn && !choice ? turn : choice}
     </Button>
   );
 };
 
-const Button = styled.button<{ winning: boolean }>`
+const Button = styled.button<{ state: 'win' | 'draw' | null }>`
   text-align: center;
   padding: 0;
   border: 1px solid #2e2e2e;
@@ -32,13 +32,15 @@ const Button = styled.button<{ winning: boolean }>`
   font-size: 4rem;
   color: #2e2e2e;
   transition: 0.2s;
-  background: ${(props) => (props.winning ? '#a4ffca' : '#fff')};
-
-  ${(props) =>
-    !props.winning &&
-    css`
-      &:hover {
-        background: #f0f0f0;
-      }
-    `}
+  background: ${({ state }) => {
+    if (state === 'win') return '#a4ffca';
+    if (state === 'draw') return '#f3ecc5';
+    return '#fff';
+  }};
+  &:hover {
+    background: #f0f0f0;
+  }
+  &:active {
+    background: #e7e7e7;
+  }
 `;

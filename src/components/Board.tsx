@@ -1,35 +1,37 @@
 import React from 'react';
-import { Board as BoardType } from 'src/types';
-import styled from 'styled-components';
+import { Board as BoardType, BoardState } from 'src/types';
+import styled, { css } from 'styled-components';
 import { Square } from './Square';
 
 interface Props {
   turn: 'X' | 'O';
-  squares: BoardType;
-  winningSquares: number[] | 'draw' | null;
+  gameIsConcluded: boolean;
+  board: BoardType;
+  boardState: BoardState;
   selectAt: (idx: number) => void;
 }
 
 export const Board: React.FC<Props> = ({
   turn,
-  squares,
-  winningSquares,
+  gameIsConcluded,
+  board,
+  boardState,
   selectAt,
 }) => (
-  <Grid>
-    {squares.map((square, idx) => (
+  <Grid disabled={gameIsConcluded}>
+    {board.map((square, idx) => (
       <Square
         key={idx}
-        state={square}
+        choice={square}
         turn={turn}
         select={() => selectAt(idx)}
-        winning={Array.isArray(winningSquares) && winningSquares.includes(idx)}
+        state={boardState[idx]}
       />
     ))}
   </Grid>
 );
 
-const Grid = styled.div`
+const Grid = styled.div<{ disabled: boolean }>`
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
   background: repeating-linear-gradient(
@@ -45,4 +47,9 @@ const Grid = styled.div`
   width: 350px;
   height: 350px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  ${(props) =>
+    props.disabled &&
+    css`
+      pointer-events: none;
+    `}
 `;

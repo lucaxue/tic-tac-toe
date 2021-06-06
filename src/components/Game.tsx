@@ -2,32 +2,45 @@ import React, { useReducer, useState } from 'react';
 import { initState, boardReducer } from '../utils/board.reducer';
 import styled from 'styled-components';
 import { Board } from './Board';
-import { calculateWinner } from 'src/utils/calculate-winner';
+import { calculateResult } from 'src/utils/calculate-result';
 
 export const Game: React.FC = () => {
   const [board, dispatch] = useReducer(boardReducer, initState);
   const [isXTurn, setIsXTurn] = useState(true);
+
+  const turn = isXTurn ? 'X' : 'O';
   const nextPlayer = () => setIsXTurn(!isXTurn);
+
+  const boardState = calculateResult(board);
+  const gameIsConcluded =
+    boardState.includes('win') || boardState.includes('draw');
 
   return (
     <Wrapper>
       <Board
-        turn={isXTurn ? 'X' : 'O'}
-        squares={board}
-        winningSquares={calculateWinner(board)}
+        turn={turn}
+        board={board}
+        boardState={boardState}
+        gameIsConcluded={gameIsConcluded}
         selectAt={(idx) => {
-          if (calculateWinner(board) || board[idx]) {
-            return;
-          }
-          dispatch({ type: 'SELECT', move: isXTurn ? 'X' : 'O', idx: idx });
+          if (gameIsConcluded || board[idx]) return;
+
+          dispatch({ type: 'SELECT', move: turn, idx: idx });
           nextPlayer();
         }}
       />
       <Status>
-        {!calculateWinner(board) ? (
-          <Text>{isXTurn ? 'X Turn' : 'O Turn'}</Text>
+        {!gameIsConcluded ? (
+          <Text>{turn} Turn</Text>
         ) : (
-          <Button onClick={() => dispatch({ type: 'RESET' })}>Restart</Button>
+          <Button
+            onClick={() => {
+              dispatch({ type: 'RESET' });
+              setIsXTurn(true);
+            }}
+          >
+            Restart
+          </Button>
         )}
       </Status>
     </Wrapper>

@@ -1,6 +1,6 @@
-import { Board } from '../types';
+import { Board, BoardState } from '../types';
 
-export function calculateWinner(board: Board) {
+export function calculateResult(board: Board): BoardState {
   const winningCombos = [
     [0, 1, 2],
     [3, 4, 5],
@@ -13,14 +13,16 @@ export function calculateWinner(board: Board) {
   ];
 
   if (board.every((square) => square !== null)) {
-    return 'draw';
+    return Array(9).fill('draw');
   }
 
   for (const combo of winningCombos) {
     const [a, b, c] = combo;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return combo;
+      return Array(9)
+        .fill(null)
+        .map((_, idx) => (combo.includes(idx) ? 'win' : null));
     }
   }
-  return null;
+  return Array(9).fill(null);
 }
