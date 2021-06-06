@@ -15,23 +15,19 @@ export const Board: React.FC<Props> = ({
   squares,
   winningSquares,
   selectAt,
-}) => {
-  return (
-    <Grid>
-      {squares.map((square, idx) => (
-        <Square
-          key={idx}
-          state={square}
-          turn={turn}
-          select={() => selectAt(idx)}
-          winning={
-            Array.isArray(winningSquares) && winningSquares.includes(idx)
-          }
-        />
-      ))}
-    </Grid>
-  );
-};
+}) => (
+  <Grid>
+    {squares.map((square, idx) => (
+      <Square
+        key={idx}
+        state={square}
+        turn={turn}
+        select={() => selectAt(idx)}
+        winning={Array.isArray(winningSquares) && winningSquares.includes(idx)}
+      />
+    ))}
+  </Grid>
+);
 
 const Grid = styled.div`
   display: grid;
@@ -43,10 +39,10 @@ const Grid = styled.div`
     #2e2e2e 2px,
     #2e2e2e 4px
   );
-  padding: 0.5rem;
+  padding: 0.1rem;
   border: 1px solid #2e2e2e;
   border-radius: 5px;
-  width: 500px;
-  height: 500px;
+  width: 350px;
+  height: 350px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `;
