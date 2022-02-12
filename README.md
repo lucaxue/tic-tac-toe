@@ -13,35 +13,6 @@
 
 <a href='https://lets-tictactoe.netlify.app/'><img src='https://i.imgur.com/5ch8Qid.png'/></a>
 
-## 📁 File Structure
-
-```
-.
-├─ .gitignore
-├─ README.md
-├─ package.json
-├─ tsconfig.json
-├─ yarn.lock
-├─ public
-│  └─ index.html
-└─ src
-├─ index.css
-├─ index.tsx
-├─ react-app-env.d.ts
-├─ setupTests.ts
-├─ types.ts
-├─ components
-│  ├─ App.tsx
-│  ├─ Board.tsx
-│  ├─ Game.tsx
-│  └─ Square.tsx
-└─ utils
-    ├─ board.reducer.ts
-    └─ calculate-result.ts
-```
-
-<br>
-
 ## 💻 Development
 
 ### 🧰 Prerequisites
